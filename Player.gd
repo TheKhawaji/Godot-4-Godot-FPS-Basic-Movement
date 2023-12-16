@@ -5,6 +5,8 @@ extends CharacterBody3D
 @onready var head = $Head
 @onready var camera_3d = $Head/Camera3D
 
+@export var _LookUp := deg_to_rad(90)
+@export var _LookDown := deg_to_rad(-90)
 
 
 @export_range(1,6) var _MouseSensitivity : float = 1
@@ -43,7 +45,7 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		rotate_y (deg_to_rad(-event.relative.x * _MouseSensX))
 		head.rotate_x (deg_to_rad(-event.relative.y * _MouseSensY))
-		head.rotation.x = clamp(head.rotation.x,deg_to_rad(-70),deg_to_rad(70))
+		head.rotation.x = clamp(head.rotation.x,_LookDown,_LookUp)
 		
 		
 		
