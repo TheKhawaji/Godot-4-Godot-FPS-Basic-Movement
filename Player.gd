@@ -4,20 +4,26 @@ extends CharacterBody3D
 @onready var ray_cast_3d = $RayCast3D
 @onready var head = $Head
 
-
+#the MAX amount for the player Head/Camera to look either Up or Down most games have this to not let the Head/Camera to loop around the character
 @export var _LookUp := deg_to_rad(70)
 @export var _LookDown := deg_to_rad(-70)
 
 
 @export var _MouseSensitivity : float = deg_to_rad(5)
 
+# this is the Movement Speed for the player
 @export var _SprintMovementSpeed = 3.5
 @export var _DefaultMovementSpeed = 2.5
+
+# the is the Lerp Speed for the Movement you can remove this if you'd like
 @export var _LerpSpeed = 6
 
+# Speed 
 var _Speed
 
+# allows the player to move in 3D space
 var _Direction = Vector3.ZERO
+
 
 const _JumpVelocity = 2.5
 var _Gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -56,7 +62,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = _JumpVelocity
 
-
+	# Handles Movement
 	var input_dir = Input.get_vector("MoveLeft", "MoveRight", "MoveForward", "MoveBackward")
 	_Direction = lerp(_Direction,(transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), delta * _LerpSpeed)
 	if _Direction:
