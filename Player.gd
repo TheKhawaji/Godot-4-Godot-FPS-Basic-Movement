@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+# the Player Nodes
 @onready var animated_sprite_2d = $CanvasLayer/GunBase/AnimatedSprite2D
 @onready var ray_cast_3d = $RayCast3D
 @onready var head = $Head
