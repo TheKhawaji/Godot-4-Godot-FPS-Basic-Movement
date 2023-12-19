@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cb5ofl4pswm35"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_hb18s"]
+[ext_resource type="Material" uid="uid://brbpikpcc1fo5" path="res://Assets/player.tres" id="2_i1m73"]
+[ext_resource type="PackedScene" uid="uid://dgyfg3q7gghfe" path="res://Assets/Models/KNIFE.glb" id="3_y18oh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m4von"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_887gg"]
+material = ExtResource("2_i1m73")
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 0, 0, 0)
+collision_layer = 2
+collision_mask = 3
+input_capture_on_drag = true
+floor_constant_speed = true
+floor_max_angle = 1.11701
+script = ExtResource("1_hb18s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_m4von")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_887gg")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+fov = 90.0
+
+[node name="KNIFE" parent="Head" instance=ExtResource("3_y18oh")]
+transform = Transform3D(1, -8.10303e-08, -5.1622e-08, 8.10303e-08, 0.422618, 0.906308, -5.1622e-08, -0.906308, 0.422618, 0.6, -0.6, -5.36442e-08)
