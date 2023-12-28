@@ -7,7 +7,7 @@ extends CharacterBody3D
 @export var _LookUp := deg_to_rad(89)
 @export var _LookDown := deg_to_rad(-89)
 
-@export var _MouseSens : float = deg_to_rad(3)
+@export var _MouseSens : float = deg_to_rad(2.85)
 
 # this is the Movement Speed for the player
 @export var _SprintMovementSpeed = 6.5
