@@ -34,7 +34,7 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("Exit"):
 		get_tree().quit()
-	if Input.is_action_just_released("Sprint"):
+	if Input.is_action_pressed("Sprint"):
 		_Speed = _SprintMovementSpeed
 	else:
 		_Speed = _DefaultMovementSpeed
