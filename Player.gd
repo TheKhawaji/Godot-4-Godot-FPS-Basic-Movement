@@ -46,10 +46,7 @@ func _unhandled_input(event):
 		head.rotation.x = clamp(head.rotation.x,_LookDown,_LookUp)
 
 func _process(delta):
-	if Input.is_action_pressed("Sprint"):
-		_Speed = _SprintMovementSpeed
-	else:
-		_Speed = _DefaultMovementSpeed
+	pass
 
 
 func _physics_process(delta):
