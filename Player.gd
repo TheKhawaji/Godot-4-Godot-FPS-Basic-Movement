@@ -12,8 +12,6 @@ extends CharacterBody3D
 
 @export var _MouseSens : float = deg_to_rad(2.85)
 
-@export var CrouchHeight = -0.25
-@export var CrouchTransition = 4
 
 # Speed 
 var _Speed
