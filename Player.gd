@@ -1,7 +1,10 @@
 extends CharacterBody3D
 
 # the Player Nodes
-@onready var head = $Head
+@onready var Head = $Head
+@onready var CollisionShape = $CollisionShape3D
+
+
 
 #the MAX amount for the player Head/Camera to look either Up or Down most games have this to not let the Head/Camera to loop around the character
 @export var _LookUp := deg_to_rad(89)
@@ -9,22 +12,25 @@ extends CharacterBody3D
 
 @export var _MouseSens : float = deg_to_rad(2.85)
 
-# this is the Movement Speed for the player
-@export var _SprintMovementSpeed = 6.5
-@export var _DefaultMovementSpeed = 4.5
-
-# the is the Lerp Speed you can remove this if you'd like
-@export var _LerpSpeed = 8
+@export var CrouchHeight = -0.25
+@export var CrouchTransition = 4
 
 # Speed 
 var _Speed
 
-# allows the player to move in 3D space
-var _Direction = Vector3.ZERO
+# this is the Movement Speed for the player
+@export var _SprintMovementSpeed = 6.5
+@export var _DefaultMovementSpeed = 4.5
+@export var _CrouchMovementSpeed = 2.5
 
+# the is the Lerp Speed you can remove this if you'd like
+@export var _LerpSpeed = 8
 
 const _JumpVelocity = 2.5
 var _Gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+# allows the player to move in 3D space
+var _Direction = Vector3.ZERO
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -34,19 +40,21 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("Exit"):
 		get_tree().quit()
-	if Input.is_action_pressed("Sprint"):
-		_Speed = _SprintMovementSpeed
-	else:
-		_Speed = _DefaultMovementSpeed
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion:
-		rotate_y (deg_to_rad(-event.relative.x * _MouseSens))
-		head.rotate_x (deg_to_rad(-event.relative.y * _MouseSens))
-		head.rotation.x = clamp(head.rotation.x,_LookDown,_LookUp)
+		if event is InputEventMouseMotion:
+			rotate_y (deg_to_rad(-event.relative.x * _MouseSens))
+			Head.rotate_x (deg_to_rad(-event.relative.y * _MouseSens))
+			Head.rotation.x = clamp(Head.rotation.x,_LookDown,_LookUp)
 
 func _process(delta):
-	pass
+	if Input.is_action_pressed("Crouch"):
+		_Speed = _CrouchMovementSpeed
+	else:
+		if Input.is_action_pressed("Sprint"):
+			_Speed = _SprintMovementSpeed
+		else:
+			_Speed = _DefaultMovementSpeed
 
 
 func _physics_process(delta):
@@ -55,7 +63,7 @@ func _physics_process(delta):
 		velocity.y -= _Gravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("Jump") and is_on_floor():
+	if Input.is_action_just_pressed("Jump"):
 		velocity.y = _JumpVelocity
 
 	# Handles Movement
