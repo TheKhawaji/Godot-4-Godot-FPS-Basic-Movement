@@ -17,9 +17,7 @@ extends CharacterBody3D
 var _Speed
 
 # this is the Movement Speed for the player
-@export var _SprintMovementSpeed = 6.5
-@export var _DefaultMovementSpeed = 4.5
-@export var _CrouchMovementSpeed = 2.5
+@export var _DefaultMovementSpeed = 6.5
 
 # the is the Lerp Speed you can remove this if you'd like
 @export var _LerpSpeed = 8
@@ -46,13 +44,7 @@ func _unhandled_input(event):
 			Head.rotation.x = clamp(Head.rotation.x,_LookDown,_LookUp)
 
 func _process(delta):
-	if Input.is_action_pressed("Crouch"):
-		_Speed = _CrouchMovementSpeed
-	else:
-		if Input.is_action_pressed("Sprint"):
-			_Speed = _SprintMovementSpeed
-		else:
-			_Speed = _DefaultMovementSpeed
+	pass
 
 
 func _physics_process(delta):
@@ -61,7 +53,7 @@ func _physics_process(delta):
 		velocity.y -= _Gravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("Jump") and is_on_floor:
+	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = _JumpVelocity
 
 	# Handles Movement
