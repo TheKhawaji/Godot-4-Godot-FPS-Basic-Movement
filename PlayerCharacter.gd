@@ -4,6 +4,8 @@ extends CharacterBody3D
 @onready var Head = $Head
 @onready var PlayerCollision = $PlayerCollision
 @onready var PlayerShapeCast = $PlayerShapeCast
+@onready var PlayerMeshInstance = $PlayerCollision/MeshInstance3D
+
 
 # Mouse Sensitivity
 @export var _MouseSens : float = deg_to_rad(2.85)
@@ -32,9 +34,11 @@ var _Speed : float
 
 # allows the player to move in 3D space
 var _Direction = Vector3.ZERO
-var _InputDirection = Vector3.UP
+var _TargetVelocity = Vector3.ZERO
+var _InputDirection = Vector3.DOWN
 
 func _ready():
+	_NormalHeight = Head.position.y
 	_NormalHeight = PlayerCollision.shape.height
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_Speed = _DefaultMovementSpeed
@@ -80,7 +84,7 @@ func _Crouch(delta):
 	Head.position.y = lerp(Head.position.y,1.2,_TransiyionSpeed * delta)
 func _unCrouch(delta):
 	PlayerCollision.shape.height = lerp(PlayerCollision.shape.height,_NormalHeight,_TransiyionSpeed * delta)
-	Head.position.y = lerp(Head.position.y,1.8,_TransiyionSpeed * delta)
+	Head.position.y = lerp(Head.position.y,_NormalHeight,_TransiyionSpeed * delta)
 
 func _physics_process(delta):
 	if not is_on_floor():
