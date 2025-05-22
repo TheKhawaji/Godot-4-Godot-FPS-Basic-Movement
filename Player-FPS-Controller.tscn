@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://578c2cpyrg6v"]
+
+[ext_resource type="Script" uid="uid://dqu7em4ydki66" path="res://Scripts/PlayerFPS-Controller.gd" id="1_3l5xg"]
+[ext_resource type="Texture2D" uid="uid://dowodc6topa4e" path="res://icon.svg" id="2_2225g"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w4y8m"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_h82hc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_im25o"]
+albedo_texture = ExtResource("2_2225g")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xavdu"]
+
+[node name="PlayerCharacter" type="CharacterBody3D"]
+script = ExtResource("1_3l5xg")
+
+[node name="PlayerCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_w4y8m")
+
+[node name="Head" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="P-Camera" type="Camera3D" parent="Head"]
+
+[node name="PlayerEnvMesh" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="PlayerB-Mesh" type="MeshInstance3D" parent="PlayerEnvMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_h82hc")
+
+[node name="PlayerFace" type="MeshInstance3D" parent="PlayerEnvMesh"]
+transform = Transform3D(-0.408922, 1.56264e-15, -3.57491e-08, 3.57491e-08, 1.78746e-08, -0.408922, 0, -0.408922, -1.78746e-08, 0, 1.72441, -0.519443)
+material_override = SubResource("StandardMaterial3D_im25o")
+mesh = SubResource("PlaneMesh_xavdu")
